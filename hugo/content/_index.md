@@ -12,7 +12,7 @@ Ever wanted to make your own custom card game but without the hassle of a craft 
 
 You can do it all with the press of a button and a cutting machine! And I can show you how!
 
-If this is your first time here, check out the [tutorial](https://alan-cha.github.io/silhouette-card-maker/)! Please join our [Discord server](https://discord.gg/jhsKmAgbXc) too!
+If this is your first time here, check out the [tutorial]({{% ref "tutorial/" %}})! Please join our [Discord server](https://discord.gg/jhsKmAgbXc) too!
 
 ## Demo
 

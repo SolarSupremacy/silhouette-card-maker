@@ -50,6 +50,7 @@ def cli(
             
             prefer_showcase,
             prefer_extra_art,
+            tokens,
 
             front_directory,
             double_sided_directory

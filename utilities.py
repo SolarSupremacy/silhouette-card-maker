@@ -328,7 +328,7 @@ def resolve_image_with_any_extension(path: str) -> str:
 def generate_pdf(
     front_dir_path: str,
     back_dir_path: str,
-    double_sided_dir_path: str,
+    ds_dir_path: str,
     output_path: str,
     output_images: bool,
     card_size: CardSize,
@@ -352,14 +352,14 @@ def generate_pdf(
     if not b_path.exists() or not b_path.is_dir():
         raise Exception(f'Back image directory path "{b_path}" is invalid.')
 
-    d_path = Path(double_sided_dir_path)
-    if not d_path.exists() or not d_path.is_dir():
-        raise Exception(f'Double-sided image directory path "{d_path}" is invalid.')
+    ds_path = Path(ds_dir_path)
+    if not ds_path.exists() or not ds_path.is_dir():
+        raise Exception(f'Double-sided image directory path "{ds_path}" is invalid.')
 
     # Delete hidden files that may affect image fetching
     delete_hidden_files_in_directory(front_dir_path)
     delete_hidden_files_in_directory(back_dir_path)
-    delete_hidden_files_in_directory(double_sided_dir_path)
+    delete_hidden_files_in_directory(ds_dir_path)
 
     # Sanity check for output images
     if output_images:
@@ -378,7 +378,7 @@ def generate_pdf(
             print(f'No back image provided in back image directory \"{back_dir_path}\". Using default instead.')
 
     front_image_filenames = get_image_file_paths(front_dir_path)
-    ds_image_filenames = get_image_file_paths(double_sided_dir_path)
+    ds_image_filenames = get_image_file_paths(ds_dir_path)
 
     # Check if double-sided back images has matching front images
     front_set = set(front_image_filenames)
@@ -389,7 +389,7 @@ def generate_pdf(
 
     if only_fronts:
         if len(ds_set) > 0:
-            raise Exception(f'Cannot use "--only_fronts" with double-sided cards. Remove cards from double-side image directory "{double_sided_dir_path}".')
+            raise Exception(f'Cannot use "--only_fronts" with double-sided cards. Remove cards from double-side image directory "{ds_dir_path}".')
 
     with open(layouts_path, 'r') as layouts_file:
         try:
@@ -463,6 +463,7 @@ def generate_pdf(
 
             # Create card layout
             num_image = 1
+            # First iterate on single-sided cards, then iterate on double-sided cards
             it = iter(natsorted(list(check_paths_subset(front_set, ds_set))) + natsorted(list(ds_set)))
             while True:
                 file_group = list(itertools.islice(it, num_cards - len(clean_skip_indices)))
@@ -488,28 +489,27 @@ def generate_pdf(
                     print(f'Image {num_image}: {file}')
                     num_image += 1
 
-                    front_image_path = os.path.join(front_dir_path, file)
+                    front_card_image_path = os.path.join(front_dir_path, file)
                     # We know the exact image path so we do not need resolve_image_with_any_extension()
-                    front_image = Image.open(front_image_path)
-                    front_image = ImageOps.exif_transpose(front_image)
-                    front_card_images.append(front_image)
+                    front_card_image = Image.open(front_card_image_path)
+                    front_card_image = ImageOps.exif_transpose(front_card_image)
+                    front_card_images.append(front_card_image)
 
-                    # Determine back image: prefer double-sided specific image, then single back image, else None
                     if only_fronts:
                         back_card_images.append(None)
                         continue
 
-                    try:
-                        ds_image_path = os.path.join(double_sided_dir_path, file)
+                    # Add double-sided back image
+                    if file in ds_set:
+                        ds_card_image_path = os.path.join(ds_dir_path, file)
                         # Allow differing extensions for double-sided images
-                        ds_image_path = resolve_image_with_any_extension(ds_image_path)
-                        ds_image = Image.open(ds_image_path)
-                        ds_image = ImageOps.exif_transpose(ds_image)
-                        back_card_images.append(ds_image)
+                        ds_card_image_path = resolve_image_with_any_extension(ds_card_image_path)
+                        ds_card_image = Image.open(ds_card_image_path)
+                        ds_card_image = ImageOps.exif_transpose(ds_card_image)
+                        back_card_images.append(ds_card_image)
                         continue
-                    except FileNotFoundError:
-                        back_card_images.append(single_back_image)
-                        continue
+
+                    back_card_images.append(single_back_image)
 
                 front_page = reg_im.copy()
                 back_page = reg_im.copy()

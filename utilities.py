@@ -37,7 +37,7 @@ class PaperSize(str, Enum):
     A4 = "a4"
     A3 = "a3"
     ARCHB = "archb"
-    
+
 class Registration(str, Enum):
     THREE = "3"
     FOUR = "4"
@@ -448,26 +448,29 @@ def generate_pdf(
 
             max_print_bleed = calculate_max_print_bleed(card_layout.x_pos, card_layout.y_pos, card_layout_size.width, card_layout_size.height)
 
-            ds_set = ds_set & front_set
-
-            # Load and cache the single back image for reuse.
+            # Load and cache the single back image for reuse
+            # Do this if we expect both front and back pages and if we have a back image
+            # use_default_back_page indicates no back image was found
             single_back_image = None
-            if not only_fronts and not use_default_back_page and back_card_image_path is not None:
+            if not only_fronts and not use_default_back_page:
                 try:
+                    # We know the exact image path so we do not need resolve_image_with_any_extension()
                     single_back_image = Image.open(back_card_image_path)
                     single_back_image = ImageOps.exif_transpose(single_back_image)
                 except FileNotFoundError:
+                    print(f'Cannot get back image "{back_card_image_path}". Using default instead.')
                     single_back_image = None
 
             # Create card layout
             num_image = 1
-            it = iter(natsorted(list(front_set)))
+            it = iter(natsorted(list(check_paths_subset(front_set, ds_set))) + natsorted(list(ds_set)))
             while True:
                 file_group = list(itertools.islice(it, num_cards - len(clean_skip_indices)))
                 if not file_group:
                     break
 
-                # Fetch card art
+                # Fetch card art in batches
+                # Batch size is based on cards per page
                 front_card_images = []
                 back_card_images = []
                 file_group_iterator = iter(file_group)
@@ -485,9 +488,8 @@ def generate_pdf(
                     print(f'Image {num_image}: {file}')
                     num_image += 1
 
-                    # Handle fronts having different extensions than back
                     front_image_path = os.path.join(front_dir_path, file)
-                    front_image_path = resolve_image_with_any_extension(front_image_path)
+                    # We know the exact image path so we do not need resolve_image_with_any_extension()
                     front_image = Image.open(front_image_path)
                     front_image = ImageOps.exif_transpose(front_image)
                     front_card_images.append(front_image)
@@ -496,23 +498,18 @@ def generate_pdf(
                     if only_fronts:
                         back_card_images.append(None)
                         continue
-                    
-                    ds_image_path = os.path.join(double_sided_dir_path, file)
-                    # allow differing extensions for ds image as well
+
                     try:
+                        ds_image_path = os.path.join(double_sided_dir_path, file)
+                        # Allow differing extensions for double-sided images
                         ds_image_path = resolve_image_with_any_extension(ds_image_path)
                         ds_image = Image.open(ds_image_path)
                         ds_image = ImageOps.exif_transpose(ds_image)
                         back_card_images.append(ds_image)
                         continue
                     except FileNotFoundError:
-                        # Fall back to single back image if present (use cached copy)
-                        if single_back_image is not None:
-                            back_card_images.append(single_back_image.copy())
-                            continue
-                        else:
-                            back_card_images.append(None)
-                            continue
+                        back_card_images.append(single_back_image)
+                        continue
 
                 front_page = reg_im.copy()
                 back_page = reg_im.copy()

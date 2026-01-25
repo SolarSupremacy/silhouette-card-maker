@@ -14,8 +14,7 @@ def request_fabtcg(query: str) -> Response:
     # Check for 2XX response code
     r.raise_for_status()
 
-    # Sleep for 150 milliseconds
-    sleep(0.15)
+    sleep(0.075)
 
     return r
 

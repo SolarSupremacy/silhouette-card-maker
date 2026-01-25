@@ -356,7 +356,7 @@ def draw_card_layout(
         x = base_x + bleed_offset_x + extend_corners_thickness
         y = base_y + bleed_offset_y + extend_corners_thickness
 
-        draw_card_with_bleed(card_image, base_image, x, y, synthetic_bleed)
+        draw_card_with_bleed(card_image, base_image, x, y, (synthetic_bleed[0] + extend_corners_thickness, synthetic_bleed[1] + extend_corners_thickness))
 
 def add_front_back_pages(front_page: Image.Image, back_page: Image.Image, pages: List[Image.Image], page_width: int, page_height: int, ppi_ratio: float, template: str, only_fronts: bool, name: str):
     # Add template version number to the back

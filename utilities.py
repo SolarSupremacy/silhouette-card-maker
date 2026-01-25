@@ -270,15 +270,25 @@ def draw_card_layout(
         if card_image is None:
             continue
 
-        x = 0
-        y = 0
+        # Calculate base position from layout
+        col = i % num_cards % num_cols
+        row = (i % num_cards) // num_cols
+        if flip:
+            row = num_rows - row - 1
+
+        base_x = math.floor(x_pos[col] * ppi_ratio)
+        base_y = math.floor(y_pos[row] * ppi_ratio)
+
+        # Default: use synthetic bleed, no position offset needed
+        bleed_offset_x = 0
+        bleed_offset_y = 0
         synthetic_bleed = (scaled_bleed_width, scaled_bleed_height)
 
         if card_image is single_back_image:
             card_image = card_image.resize((scaled_width, scaled_height))
 
         # Apply cropping and scaling if required
-        elif (crop_percent_x > 0 or crop_percent_y > 0):
+        elif crop_percent_x > 0 or crop_percent_y > 0:
             card_width, card_height = card_image.size
 
             # Calculate the original size minus the desired crop: "cropped size"
@@ -298,9 +308,8 @@ def draw_card_layout(
             unscaled_height_with_bleed = math.floor(scaled_height_with_bleed * cropped_scaled_ratio_y)
 
             # Check if the unscaled bleed size is smaller than the original card size
-            # If so, crop the card directly to the unscaled bleed size
+            # If so, we can use real bleed from the card's edge pixels
             if unscaled_width_with_bleed < card_width and unscaled_height_with_bleed < card_height:
-                print("Using bleed from cropped image")
                 crop_x = (card_width - unscaled_width_with_bleed) // 2
                 crop_y = (card_height - unscaled_height_with_bleed) // 2
                 card_image = card_image.crop((
@@ -311,10 +320,9 @@ def draw_card_layout(
                 ))
                 card_image = card_image.resize((scaled_width_with_bleed, scaled_height_with_bleed))
 
-                x -= scaled_bleed_width
-                y -= scaled_bleed_height
-
-                # Because we are adding bleed from the card image, no need for synthetic bleed
+                # Offset position to account for bleed included in image
+                bleed_offset_x = -scaled_bleed_width
+                bleed_offset_y = -scaled_bleed_height
                 synthetic_bleed = (0, 0)
 
             # Otherwise, crop the card to the cropped size, then resize it to the scaled size
@@ -329,35 +337,26 @@ def draw_card_layout(
                 ))
                 card_image = card_image.resize((scaled_width, scaled_height))
 
-                x += scaled_width_with_bleed * 2
-                y += scaled_height_with_bleed * 2
-
         # If the card is not cropped, just resize it to the desired size
         else:
             card_image = card_image.resize((scaled_width, scaled_height))
 
         # Extend the corners if required
-        card_image = card_image.crop((extend_corners_thickness, extend_corners_thickness, card_image.width - extend_corners_thickness, card_image.height - extend_corners_thickness))
-
-        # Calculate the location of the new card based on what number the card is
-        x += math.floor(x_pos[i % num_cards % num_cols] * ppi_ratio)
+        card_image = card_image.crop((
+            extend_corners_thickness,
+            extend_corners_thickness,
+            card_image.width - extend_corners_thickness,
+            card_image.height - extend_corners_thickness
+        ))
 
         if flip:
-            y += math.floor(y_pos[num_rows - ((i % num_cards) // num_cols) - 1] * ppi_ratio)
-
-            # Rotate the back image to account for orientation
             card_image = card_image.rotate(180)
-        else:
-            y += math.floor(y_pos[(i % num_cards) // num_cols] * ppi_ratio)
 
-        # Push the card to the document with bleed
-        draw_card_with_bleed(
-            card_image,
-            base_image,
-            x + extend_corners_thickness,
-            y + extend_corners_thickness,
-            synthetic_bleed
-        )
+        # Calculate final position
+        x = base_x + bleed_offset_x + extend_corners_thickness
+        y = base_y + bleed_offset_y + extend_corners_thickness
+
+        draw_card_with_bleed(card_image, base_image, x, y, synthetic_bleed)
 
 def add_front_back_pages(front_page: Image.Image, back_page: Image.Image, pages: List[Image.Image], page_width: int, page_height: int, ppi_ratio: float, template: str, only_fronts: bool, name: str):
     # Add template version number to the back

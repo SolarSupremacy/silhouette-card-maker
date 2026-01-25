@@ -1,11 +1,14 @@
 import os
 import requests
-import time
+from time import sleep
 
 def request_api(query: str) -> requests.Response:
     r = requests.get(query, headers = {'user-agent': 'silhouette-card-maker/0.1', 'accept': '*/*'})
+
+    # Check for 2XX response code
     r.raise_for_status()
-    time.sleep(0.15)
+
+    sleep(0.075)
 
     return r
 

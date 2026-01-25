@@ -14,8 +14,9 @@ def request_lorcast(
     # Check for 2XX response code
     r.raise_for_status()
 
-    # Sleep for 150 milliseconds, greater than the 100ms requested by Lorcast API documentation
-    time.sleep(0.15)
+    # Sleep for 75 ms, greater than the 50 ms requested by Lorcast API documentation
+    # See rate limits: https://lorcast.com/docs/api
+    time.sleep(0.075)
 
     return r
 

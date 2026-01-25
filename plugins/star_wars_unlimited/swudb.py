@@ -16,8 +16,10 @@ card_tuple = Tuple[str, str] # Name, Title
 def request_swudb(query: str) -> Response:
     r = get(query, headers = {'user-agent': 'silhouette-card-maker/0.1', 'accept': '*/*'})
 
+    # Check for 2XX response code
     r.raise_for_status()
-    sleep(0.15)
+
+    sleep(0.075)
 
     return r
 
@@ -47,7 +49,7 @@ def fetch_name_and_title(card_id: str) -> card_tuple:
             title = 'Darth Tyranus'
 
         return (name, title)
-    
+
     else:
         raise Exception(f'Cannot parse card ID: "{card_id}"')
 

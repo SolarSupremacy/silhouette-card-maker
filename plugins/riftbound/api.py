@@ -1,8 +1,8 @@
 from os import path
 from re import compile, search, sub
 from enum import Enum
-import time
 import requests
+from time import sleep
 
 PILTOVER_URL_TEMPLATE = 'https://cdn.piltoverarchive.com/cards/{card_number}.webp'
 RIFTMANA_URL_TEMPLATE = 'https://riftmana.com/wp-content/uploads/Cards/{card_number}.webp'
@@ -13,8 +13,11 @@ class ImageServer(str, Enum):
 
 def request_api(query: str) -> requests.Response:
     r = requests.get(query, headers = {'user-agent': 'silhouette-card-maker/0.1', 'accept': '*/*'})
+
+    # Check for 2XX response code
     r.raise_for_status()
-    time.sleep(0.15)
+
+    sleep(0.075)
 
     return r
 

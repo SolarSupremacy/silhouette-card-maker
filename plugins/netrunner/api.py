@@ -13,8 +13,10 @@ OUTPUT_CARD_ART_FILE_TEMPLATE = '{deck_index}{card_name}{quantity_counter}.png'
 def request_api(query: str) -> Response:
     r = get(query, headers = {'user-agent': 'silhouette-card-maker/0.1', 'accept': '*/*'})
 
+    # Check for 2XX response code
     r.raise_for_status()
-    sleep(0.15)
+
+    sleep(0.075)
 
     return r
 

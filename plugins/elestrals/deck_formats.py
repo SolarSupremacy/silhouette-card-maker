@@ -64,7 +64,9 @@ def parse_elestrals(file_path: str, handle_card: Callable):
             name = card_data.get("Name")
             image = card_data.get("Image")
 
-            print(f'Index: {index}, quantity: {quantity}, name: {name}')
+            parts = [f'Index: {index}', f'quantity: {quantity}']
+            if name: parts.append(f'name: {name}')
+            print(', '.join(parts))
             handle_card(index + 1, name, image, quantity)
 
 class DeckFormat(str, Enum):

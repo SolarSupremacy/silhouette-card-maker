@@ -23,7 +23,10 @@ def parse_deck_helper(
 
             name, card_number, quantity = extract_card_data(line)
 
-            print(f'Index: {index}, quantity: {quantity}, card number: {card_number}, name: {name}')
+            parts = [f'Index: {index}', f'quantity: {quantity}']
+            if card_number: parts.append(f'card number: {card_number}')
+            if name: parts.append(f'name: {name}')
+            print(', '.join(parts))
             try:
                 handle_card(index, card_number, quantity)
             except Exception as e:

@@ -16,7 +16,10 @@ def parse_deck_helper(deck_text: str, is_card_line: Callable[[str], bool], extra
 
             name, enchanted, quantity = extract_card_data(line)
 
-            print(f'Index: {index}, quantity: {quantity}, name: {name}, enchanted: {enchanted}')
+            parts = [f'Index: {index}', f'quantity: {quantity}']
+            if name: parts.append(f'name: {name}')
+            if enchanted: parts.append(f'enchanted: {enchanted}')
+            print(', '.join(parts))
             try:
                 handle_card(index, name, enchanted, quantity)
             except Exception as e:

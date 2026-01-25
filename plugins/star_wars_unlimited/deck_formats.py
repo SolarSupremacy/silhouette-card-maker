@@ -16,7 +16,11 @@ def parse_deck_helper(deck_text: str, handle_card: Callable, deck_splitter: Call
 
             name, title, card_id, quantity = extract_card_data(line)
 
-            print(f'Index: {index}, quantity: {quantity}, card ID: {card_id}, name: {name}, title: {title}')
+            parts = [f'Index: {index}', f'quantity: {quantity}']
+            if card_id: parts.append(f'card ID: {card_id}')
+            if name: parts.append(f'name: {name}')
+            if title: parts.append(f'title: {title}')
+            print(', '.join(parts))
 
             try:
                 handle_card(index, name, title, quantity)
@@ -50,7 +54,11 @@ def parse_swudb_json(deck_text: str, handle_card: Callable) -> None:
         quantity = card.get("count", 1)
         name, title = fetch_name_and_title(card_id)
 
-        print(f'Index: {index}, quantity: {quantity}, card ID: {card_id}, name: {name}, title: {title}')
+        parts = [f'Index: {index}', f'quantity: {quantity}']
+        if card_id: parts.append(f'card ID: {card_id}')
+        if name: parts.append(f'name: {name}')
+        if title: parts.append(f'title: {title}')
+        print(', '.join(parts))
         handle_card(index, name, title, quantity)
 
 def parse_melee(deck_text: str, handle_card: Callable) -> None:

@@ -14,7 +14,9 @@ def parse_deck_helper(deck_text: str, handle_card: Callable, is_card_line: Calla
 
             qr_code, quantity = extract_card_data(line)
 
-            print(f'Index: {index}, quantity: {quantity}, QR code: {qr_code}')
+            parts = [f'Index: {index}', f'quantity: {quantity}']
+            if qr_code: parts.append(f'QR code: {qr_code}')
+            print(', '.join(parts))
             try:
                 handle_card(index, qr_code, quantity)
             except Exception as e:

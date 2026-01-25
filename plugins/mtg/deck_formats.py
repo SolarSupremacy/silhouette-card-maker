@@ -19,7 +19,11 @@ def parse_deck_helper(deck_text: str, is_card_line: Callable[[str], bool], extra
 
             name, set_code, collector_number, quantity = extract_card_data(line)
 
-            print(f'Index: {index}, quantity: {quantity}, set code: {set_code}, collector number: {collector_number}, name: {name}')
+            parts = [f'Index: {index}', f'quantity: {quantity}']
+            if set_code: parts.append(f'set code: {set_code}')
+            if collector_number: parts.append(f'collector number: {collector_number}')
+            if name: parts.append(f'name: {name}')
+            print(', '.join(parts))
             try:
                 handle_card(index, name, set_code, collector_number, quantity)
             except Exception as e:
@@ -205,7 +209,11 @@ def parse_scryfall_json(deck_text, handle_card: Callable) -> None:
             collector_number = card_digest.get("collector_number", "")
             quantity = item.get("count", 1)
 
-            print(f'Index: {index}, quantity: {quantity}, set code: {set_code}, collector number: {collector_number}, name: {name}')
+            parts = [f'Index: {index}', f'quantity: {quantity}']
+            if set_code: parts.append(f'set code: {set_code}')
+            if collector_number: parts.append(f'collector number: {collector_number}')
+            if name: parts.append(f'name: {name}')
+            print(', '.join(parts))
             handle_card(index, name, set_code, collector_number, quantity)
 
 # MPCFill XML
@@ -244,7 +252,9 @@ def parse_mpcfill_xml(deck_text, handle_card: Callable) -> None:
     decklist = [x for x in decklist if x]
 
     for index, item in enumerate(decklist, start=1):
-        print(f"Index: {index}, quantity: {item['quantity']}, name: {item['name']}")
+        parts = [f'Index: {index}', f"quantity: {item['quantity']}"]
+        if item['name']: parts.append(f"name: {item['name']}")
+        print(', '.join(parts))
         handle_card(index, item["id"], item["name"], item.get("back", None), item["quantity"])
 
 class DeckFormat(str, Enum):

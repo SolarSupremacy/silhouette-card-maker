@@ -1,11 +1,11 @@
 import os
+from typing import Set
 
 import click
-from deck_formats import DeckFormat, parse_deck
-from scryfall import get_handle_card as scryfall_get_handle_card
-from mpcfill import get_handle_card as mpc_get_handle_card
 
-from typing import Set
+from deck_formats import DeckFormat, parse_deck, extract_mpcfill_card_ids
+from scryfall import get_handle_card as scryfall_get_handle_card
+from mpcfill import get_handle_card as mpc_get_handle_card, prefetch_images
 
 front_directory = os.path.join('game', 'front')
 double_sided_directory = os.path.join('game', 'double_sided')
@@ -58,6 +58,11 @@ def cli(
 
     with open(deck_path, 'r') as deck_file:
         deck_text = deck_file.read()
+
+        # For MPCFill XML, prefetch all unique images in parallel before processing
+        if format == DeckFormat.MPCFILL_XML:
+            card_ids = extract_mpcfill_card_ids(deck_text)
+            prefetch_images(card_ids)
 
         parse_deck(
             deck_text,

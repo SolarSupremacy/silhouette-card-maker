@@ -86,6 +86,9 @@ for paper_size in PaperSize:
                 
                 back_draw.text((back_element_x + test_half_size, back_element_y + test_half_size + 30), f'({x_index - matrix_half_size_x}, {y_index - matrix_half_size_y})', fill="red", anchor="mm", font=coord_font)
 
+        # Rotate back image 180 degrees for long-side flip printing
+        back_image = back_image.rotate(180)
+
         card_list = [front_image, back_image]
         pdf_path = os.path.join("calibration", f"{paper_size.value}_calibration.pdf")
         card_list[0].save(pdf_path, save_all=True, append_images=card_list[1:], resolution=300, speed=0, subsampling=0, quality=100)

@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "silhouette",
+    "hextra",
+    "hugo",
+    "submodules",
+    "cspell",
+    "pokemon",
+    "yugioh",
+    "digimon",
+    "lorcana",
+    "netrunner",
+    "gundam",
+    "riftbound",
+    "elestrals"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    "venv",
+    ".git",
+    "hugo/themes/**"
+  ]
+}

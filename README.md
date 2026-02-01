@@ -129,6 +129,8 @@ Plugins streamline the process for acquiring card images for various games.
 
 The [Magic: The Gathering plugin](plugins/mtg/README.md) supports various decklist formats, including **MTGA**, **MTGO**, **Archidekt**, **Deckstats**, **Moxfield**, and **Scryfall**.
 
+The [Pokemon plugin](plugins/pokemon/README.md) supports **Limitless TCG** format.
+
 The [Yu-Gi-Oh! plugin](plugins/yugioh/README.md) supports **YDK** and **YDKE** formats.
 
 The [Altered plugin](plugins/altered/README.md) supports **Ajordat** format.
@@ -150,8 +152,6 @@ The [Lorcana plugin](plugins/lorcana/README.md) supports **Dreamborn** format.
 The [Netrunner plugin](plugins/netrunner/README.md) supports **text**, **bbCode**, **markdown**, **plain text**,  and **Jinteki** formats.
 
 The [One Piece plugin](plugins/one_piece/README.md) supports **OPTCG Simulator** and **Egman Events** formats.
-
-The [Pokemon plugin](plugins/pokemon/README.md) supports **Limitless TCG** format.
 
 The [Riftbound plugin](plugins/riftbound/README.md) supports **Tabletop Simulator**, **Pixelborn**, and **Piltover Archive** formats.
 

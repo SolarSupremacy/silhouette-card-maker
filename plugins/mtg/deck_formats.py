@@ -5,7 +5,7 @@ from enum import Enum
 from typing import Callable, Tuple
 from xml.etree import ElementTree as ET
 
-from scryfall import remove_nonalphanumeric
+from .scryfall import remove_nonalphanumeric
 
 card_data_tuple = Tuple[str, str, int, int]
 

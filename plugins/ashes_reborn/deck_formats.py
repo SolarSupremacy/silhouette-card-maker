@@ -2,7 +2,7 @@ from enum import Enum
 from _collections_abc import Set
 import os
 from typing import Callable, Tuple
-from ashes import fetch_deck_data
+from .ashes import fetch_deck_data
 from re import compile
 
 card_data_tuple = Tuple[str, str, int] # name, image, quantity

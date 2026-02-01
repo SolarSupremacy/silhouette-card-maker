@@ -250,6 +250,7 @@ class TestScryfallJsonFormat:
 
 # --- Integration Tests for API and Image Fetching ---
 
+@pytest.mark.integration
 class TestScryfallAPI:
     """Test Scryfall API requests."""
 
@@ -261,6 +262,7 @@ class TestScryfallAPI:
         assert json_data.get('name') == "Lightning Bolt"
 
 
+@pytest.mark.integration
 class TestFullFetchWorkflow:
     """Integration tests for the complete card fetching workflow."""
 

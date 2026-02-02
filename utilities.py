@@ -200,6 +200,73 @@ def get_back_card_image_path(back_dir_path) -> str | None:
 
     return files[index]
 
+def crop_and_scale_image(
+    card_image: Image.Image,
+    crop_percent_x: float,
+    crop_percent_y: float,
+    scaled_width: int,
+    scaled_height: int,
+    scaled_bleed_width: int,
+    scaled_bleed_height: int
+) -> tuple[Image.Image, int, int, tuple[int, int]]:
+    """
+    Crop and scale a card image, returning the processed image and bleed offsets.
+
+    Returns:
+        tuple of:
+        - processed_image: The cropped and scaled card image
+        - bleed_offset_x: X position adjustment when bleed is included in image (negative or 0)
+        - bleed_offset_y: Y position adjustment when bleed is included in image (negative or 0)
+        - synthetic_bleed: (width, height) of bleed to generate artificially, (0, 0) if real bleed was used
+    """
+    card_width, card_height = card_image.size
+
+    # Calculate the original size minus the desired crop: "cropped size"
+    cropped_width = math.floor(card_width * (1 - (crop_percent_x / 100)))
+    cropped_height = math.floor(card_height * (1 - (crop_percent_y / 100)))
+
+    # Calculate the ratio between the cropped size and the scaled size: "scale ratio"
+    cropped_scaled_ratio_x = cropped_width / scaled_width
+    cropped_scaled_ratio_y = cropped_height / scaled_height
+
+    # Calculate the size of the card after adding bleed: "bleed size"
+    scaled_width_with_bleed = scaled_width + 2 * scaled_bleed_width
+    scaled_height_with_bleed = scaled_height + 2 * scaled_bleed_height
+
+    # Calculate the size of the card after adding bleed, but before scaling: "unscaled bleed size"
+    unscaled_width_with_bleed = math.floor(scaled_width_with_bleed * cropped_scaled_ratio_x)
+    unscaled_height_with_bleed = math.floor(scaled_height_with_bleed * cropped_scaled_ratio_y)
+
+    # Check if the unscaled bleed size is smaller than the original card size
+    # If so, we can use real bleed from the card's edge pixels
+    if unscaled_width_with_bleed < card_width and unscaled_height_with_bleed < card_height:
+        crop_x = (card_width - unscaled_width_with_bleed) // 2
+        crop_y = (card_height - unscaled_height_with_bleed) // 2
+        card_image = card_image.crop((
+            crop_x,
+            crop_y,
+            card_width - crop_x,
+            card_height - crop_y,
+        ))
+        card_image = card_image.resize((scaled_width_with_bleed, scaled_height_with_bleed))
+
+        # Offset position to account for bleed included in image
+        return card_image, -scaled_bleed_width, -scaled_bleed_height, (0, 0)
+
+    # Otherwise, crop the card to the cropped size, then resize it to the scaled size
+    crop_x = card_width * (crop_percent_x / 100) // 2
+    crop_y = card_height * (crop_percent_y / 100) // 2
+    card_image = card_image.crop((
+        crop_x,
+        crop_y,
+        card_width - crop_x,
+        card_height - crop_y,
+    ))
+    card_image = card_image.resize((scaled_width, scaled_height))
+
+    return card_image, 0, 0, (scaled_bleed_width, scaled_bleed_height)
+
+
 def draw_card_with_bleed(card_image: Image.Image, base_image: Image.Image, x: int, y: int, print_bleed: tuple[int, int]):
     bleed_width, bleed_height = print_bleed
 
@@ -249,12 +316,14 @@ def draw_card_layout(
     height: int,
     print_bleed: tuple[int, int],
     crop: tuple[float, float],
+    crop_backs: tuple[float, float],
     ppi_ratio: float,
     extend_corners: int,
     flip: bool
 ):
     num_cards = num_rows * num_cols
     crop_percent_x, crop_percent_y = crop
+    crop_backs_percent_x, crop_backs_percent_y = crop_backs
 
     extend_corners_thickness = math.floor(extend_corners * ppi_ratio)
 
@@ -284,60 +353,24 @@ def draw_card_layout(
         bleed_offset_y = 0
         synthetic_bleed = (scaled_bleed_width, scaled_bleed_height)
 
+        # Determine which crop percentages to use
         if card_image is single_back_image:
-            card_image = card_image.resize((scaled_width, scaled_height))
+            active_crop_x, active_crop_y = crop_backs_percent_x, crop_backs_percent_y
+        else:
+            active_crop_x, active_crop_y = crop_percent_x, crop_percent_y
 
         # Apply cropping and scaling if required
-        elif crop_percent_x > 0 or crop_percent_y > 0:
-            card_width, card_height = card_image.size
-
-            # Calculate the original size minus the desired crop: "cropped size"
-            cropped_width = math.floor(card_width * (1 - (crop_percent_x / 100)))
-            cropped_height = math.floor(card_height * (1 - (crop_percent_y / 100)))
-
-            # Calculate the ratio between the cropped size and the scaled size: "scale ratio"
-            cropped_scaled_ratio_x = cropped_width / scaled_width
-            cropped_scaled_ratio_y = cropped_height / scaled_height
-
-            # Calculate the size of the card after adding bleed: "bleed size"
-            scaled_width_with_bleed = scaled_width + 2 * scaled_bleed_width
-            scaled_height_with_bleed = scaled_height + 2 * scaled_bleed_height
-
-            # Calculate the size of the card after adding bleed, but before scaling: "unscaled bleed size"
-            unscaled_width_with_bleed = math.floor(scaled_width_with_bleed * cropped_scaled_ratio_x)
-            unscaled_height_with_bleed = math.floor(scaled_height_with_bleed * cropped_scaled_ratio_y)
-
-            # Check if the unscaled bleed size is smaller than the original card size
-            # If so, we can use real bleed from the card's edge pixels
-            if unscaled_width_with_bleed < card_width and unscaled_height_with_bleed < card_height:
-                crop_x = (card_width - unscaled_width_with_bleed) // 2
-                crop_y = (card_height - unscaled_height_with_bleed) // 2
-                card_image = card_image.crop((
-                    crop_x,
-                    crop_y,
-                    card_width - crop_x,
-                    card_height - crop_y,
-                ))
-                card_image = card_image.resize((scaled_width_with_bleed, scaled_height_with_bleed))
-
-                # Offset position to account for bleed included in image
-                bleed_offset_x = -scaled_bleed_width
-                bleed_offset_y = -scaled_bleed_height
-                synthetic_bleed = (0, 0)
-
-            # Otherwise, crop the card to the cropped size, then resize it to the scaled size
-            else:
-                crop_x = card_width * (crop_percent_x / 100) // 2
-                crop_y = card_height * (crop_percent_y / 100) // 2
-                card_image = card_image.crop((
-                    crop_x,
-                    crop_y,
-                    card_width - crop_x,
-                    card_height - crop_y,
-                ))
-                card_image = card_image.resize((scaled_width, scaled_height))
-
-        # If the card is not cropped, just resize it to the desired size
+        if active_crop_x > 0 or active_crop_y > 0:
+            # Returns: (image, x_offset, y_offset, synthetic_bleed_to_generate)
+            card_image, bleed_offset_x, bleed_offset_y, synthetic_bleed = crop_and_scale_image(
+                card_image,
+                active_crop_x,
+                active_crop_y,
+                scaled_width,
+                scaled_height,
+                scaled_bleed_width,
+                scaled_bleed_height
+            )
         else:
             card_image = card_image.resize((scaled_width, scaled_height))
 
@@ -422,6 +455,7 @@ def generate_pdf(
     registration: Registration,
     only_fronts: bool,
     crop_string: str | None,
+    crop_backs_string: str | None,
     extend_corners: int,
     ppi: int,
     quality: int,
@@ -502,6 +536,7 @@ def generate_pdf(
 
         # Determine the amount of x and y crop
         crop = parse_crop_string(crop_string, card_layout_size.width, card_layout_size.height)
+        crop_backs = parse_crop_string(crop_backs_string, card_layout_size.width, card_layout_size.height)
 
         num_rows = len(card_layout.y_pos)
         num_cols = len(card_layout.x_pos)
@@ -546,6 +581,8 @@ def generate_pdf(
                 except FileNotFoundError:
                     print(f'Cannot get back image "{back_card_image_path}". Using default instead.')
                     single_back_image = None
+                except OSError as e:
+                    raise OSError(f'Failed to load back image "{back_card_image_path}": {e}') from e
 
             # Create card layout
             num_image = 1
@@ -579,8 +616,11 @@ def generate_pdf(
                     # Allow differing extensions for double-sided images
                     # Iteration is a combination of front and double-sided image paths
                     front_card_image_path = resolve_image_with_any_extension(front_card_image_path)
-                    front_card_image = Image.open(front_card_image_path)
-                    front_card_image = ImageOps.exif_transpose(front_card_image)
+                    try:
+                        front_card_image = Image.open(front_card_image_path)
+                        front_card_image = ImageOps.exif_transpose(front_card_image)
+                    except OSError as e:
+                        raise OSError(f'Failed to load front image "{front_card_image_path}": {e}') from e
                     front_card_images.append(front_card_image)
 
                     if only_fronts:
@@ -593,8 +633,11 @@ def generate_pdf(
                         # Allow differing extensions for double-sided images
                         # Iteration is a combination of front and double-sided image paths
                         ds_card_image_path = resolve_image_with_any_extension(ds_card_image_path)
-                        ds_card_image = Image.open(ds_card_image_path)
-                        ds_card_image = ImageOps.exif_transpose(ds_card_image)
+                        try:
+                            ds_card_image = Image.open(ds_card_image_path)
+                            ds_card_image = ImageOps.exif_transpose(ds_card_image)
+                        except OSError as e:
+                            raise OSError(f'Failed to load double-sided image "{ds_card_image_path}": {e}') from e
                         back_card_images.append(ds_card_image)
                         continue
 
@@ -616,6 +659,7 @@ def generate_pdf(
                     card_layout_size.height,
                     max_print_bleed,
                     crop,
+                    crop_backs,
                     ppi_ratio,
                     extend_corners,
                     flip=False
@@ -634,6 +678,7 @@ def generate_pdf(
                     card_layout_size.height,
                     max_print_bleed,
                     crop,
+                    crop_backs,
                     ppi_ratio,
                     extend_corners,
                     flip=True # Flip the back sides

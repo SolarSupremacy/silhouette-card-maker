@@ -22,6 +22,7 @@ default_output_path = os.path.join(output_directory, 'game.pdf')
 @click.option("--registration", default=Registration.THREE.value, type=click.Choice([t.value for t in Registration], case_sensitive=False), show_default=True, help="The desired registration.")
 @click.option("--only_fronts", default=False, is_flag=True, help="Only use the card fronts, exclude the card backs.")
 @click.option("--crop", help="Crop the outer portion of front and double-sided images. Examples: 3mm, 0.125in, 6.5.")
+@click.option("--crop_backs", help="Crop the outer portion of back images. Examples: 3mm, 0.125in, 6.5.")
 @click.option("--extend_corners", default=0, type=click.IntRange(min=0), show_default=True, help="Reduce artifacts produced by rounded corners in card images.")
 @click.option("--ppi", default=300, type=click.IntRange(min=0), show_default=True, help="Pixels per inch (PPI) when creating PDF.")
 @click.option("--quality", default=75, type=click.IntRange(min=0, max=100), show_default=True, help="File compression. A higher value corresponds to better quality and larger file size.")
@@ -41,6 +42,7 @@ def cli(
     registration,
     only_fronts,
     crop,
+    crop_backs,
     extend_corners,
     ppi,
     quality,
@@ -59,6 +61,7 @@ def cli(
         registration,
         only_fronts,
         crop,
+        crop_backs,
         extend_corners,
         ppi,
         quality,

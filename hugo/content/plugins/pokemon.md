@@ -1,6 +1,6 @@
 ---
 title: 'Pokemon'
-weight: 3
+weight: 2
 ---
 
 This plugin reads a decklist, automatically fetches card art from [Limitless](https://limitlesstcg.com/) and puts them in the proper `game/` directories.

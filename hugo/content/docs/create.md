@@ -142,6 +142,8 @@ Options:
                                   backs.
   --crop TEXT                     Crop the outer portion of front and double-
                                   sided images. Examples: 3mm, 0.125in, 6.5.
+  --crop_backs TEXT               Crop the outer portion of back images.
+                                  Examples: 3mm, 0.125in, 6.5.
   --extend_corners INTEGER RANGE  Reduce artifacts produced by rounded corners
                                   in card images.  [default: 0; x>=0]
   --ppi INTEGER RANGE             Pixels per inch (PPI) when creating PDF.

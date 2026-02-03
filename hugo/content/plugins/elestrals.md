@@ -28,8 +28,7 @@ Now you can create the PDF using [`create_pdf.py`]({{% ref "../docs/create" %}})
 ## CLI Options
 
 ```
-Usage: fetch.py [OPTIONS] DECK_PATH {tts|digimoncardio|digimoncarddev|digimonc
-                ardapp|digimonmeta|untap}
+Usage: fetch.py [OPTIONS] DECK_PATH {elestrals}
 
 Options:
   --help  Show this message and exit.
@@ -45,7 +44,8 @@ The format for Elestrals Play Network.
 6883b784bd9cf7315d565843
 ```
 
-You can also use YDKE directly in the command line. Note the single quotes around the YDKE.
+You can also use this decklist directly in the command line.
 
 ```sh
 python plugins/elestrals/fetch.py 6883b784bd9cf7315d565843 elestrals
+```

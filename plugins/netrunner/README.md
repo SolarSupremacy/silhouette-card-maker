@@ -239,7 +239,7 @@ Decklist published on https://netrunnerdb.com.
 
 ### `jinteki`
 
-Jinteki format.
+[Jinteki](https://jinteki.net) format.
 
 ```
 3 Fujii Asset Retrieval

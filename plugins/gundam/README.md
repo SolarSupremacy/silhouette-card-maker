@@ -35,7 +35,7 @@ Options:
 
 ### `deckplanet`
 
-DeckPlanet format.
+[DeckPlanet](https://www.deckplanet.net/) format.
 
 ```
 2 Guntank [GD01-008]
@@ -63,7 +63,7 @@ DeckPlanet format.
 
 ### `limitless`
 
-Limitless TCG format.
+[Limitless](https://limitlesstcg.com) format.
 
 ```
 4 Dopp GD01-039
@@ -85,7 +85,7 @@ Limitless TCG format.
 
 ### `egman`
 
-Egman Events format.
+[Egman Events](https://egmanevents.com) format.
 
 ```
 4 GD01-039 Dopp
@@ -107,7 +107,7 @@ Egman Events format.
 
 ### `exburst`
 
-ExBurst format.
+[ExBurst](https://exburst.dev) format.
 
 ```
 4 x ST04-008

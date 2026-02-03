@@ -60,7 +60,7 @@ T0dOLTI2NS0xJE9HTi0yNDYtMSRPR04tMjQ1LTEkT0dOLTI0NS0xJE9HTi0yNDUtMSRPR04tMDk1LTEk
 
 ### `piltover_archive`
 
-Piltover Archive format.
+[Piltover Archive](https://piltoverarchive.com) format.
 
 ```
 1 Viktor, Herald of the Arcane

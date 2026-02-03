@@ -38,7 +38,7 @@ Options:
 
 ### `curiosa`
 
-Curiosa format.
+[Curiosa](https://curiosa.io) format.
 
 ```
 cme5x329q00k9jo04ouuycsek

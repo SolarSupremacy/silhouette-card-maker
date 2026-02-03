@@ -35,7 +35,7 @@ Options:
 
 ### `limitless`
 
-Limitless format.
+[Limitless](https://limitlesstcg.com) format.
 
 ```
 Pokémon: 13

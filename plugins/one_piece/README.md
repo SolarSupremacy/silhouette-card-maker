@@ -35,7 +35,7 @@ Options:
 
 ### `optcgsim`
 
-OPTCG Simulator format.
+[OPTCG Sim](https://optcgsim.com) format.
 
 ```
 1xOP12-001
@@ -58,7 +58,7 @@ OPTCG Simulator format.
 
 ### `egman`
 
-Egman Events format.
+[Egman Events](https://egmanevents.com) format.
 
 ```
 4 OP01-016 Nami

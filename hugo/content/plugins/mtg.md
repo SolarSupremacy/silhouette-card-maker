@@ -128,7 +128,7 @@ SIDEBOARD:
 
 ### `archidekt`
 
-Archidekt format.
+[Archidekt](https://archidekt.com) format.
 
 ```
 1x Agadeem's Awakening // Agadeem, the Undercrypt (znr) 90 [Resilience,Land]
@@ -140,7 +140,7 @@ Archidekt format.
 
 ### `deckstats`
 
-Deckstats format.
+[Deckstats](https://deckstats.net) format.
 
 ```
 //Main
@@ -157,7 +157,7 @@ Deckstats format.
 
 ### `moxfield`
 
-Moxfield format.
+[Moxfield](https://moxfield.com) format.
 
 ```
 1 Ainok Bond-Kin (2X2) 5
@@ -171,7 +171,7 @@ SIDEBOARD:
 
 ### `scryfall_json`
 
-Scryfall JSON format.
+[Scryfall](https://scryfall.com) JSON format.
 
 ```json
 {
@@ -210,7 +210,7 @@ Scryfall JSON format.
 
 ### `mpcfill_xml`
 
-MPCFill XML format.
+[MPCFill](https://mpcfill.com) XML format.
 
 ```xml
 <order>

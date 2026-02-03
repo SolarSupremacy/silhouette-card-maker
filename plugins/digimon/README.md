@@ -36,7 +36,7 @@ Options:
 
 ### `tts`
 
-The format for ``Tabletop Simulator``.
+The format for `Tabletop Simulator`.
 
 ```
 ["Exported from https://digimoncard.dev","BT15-006","BT15-006","BT15-006","BT15-006","BT2-070","BT2-070","BT2-070","BT15-069","BT15-069","BT15-069","BT15-069","P-123","BT16-082","BT16-082","BT16-082","BT16-082","BT19-062","BT18-026","BT18-053","BT7-013","BT8-067","EX9-011","EX9-012","EX9-043","BT11-055","BT18-052","BT19-052","EX7-044","ST17-07","EX9-030","BT15-064","EX9-064","BT12-072","EX1-073","EX1-073","EX1-073","EX1-073","EX3-013","EX9-073","EX9-073","BT11-092","BT11-092","BT11-092","BT11-092","EX9-068","EX9-068","BT9-102","BT9-102","BT9-102","BT9-102","BT15-096","BT15-096","BT15-096","BT15-096"]
@@ -44,7 +44,7 @@ The format for ``Tabletop Simulator``.
 
 ### `digimoncardio`
 
-[digimoncard.io](digimoncard.io) format.
+[digimoncard.io](https://digimoncard.io) format.
 
 ```
 // Digimon Deck List 
@@ -72,7 +72,7 @@ The format for ``Tabletop Simulator``.
 
 ### `digimoncarddev`
 
-[digimoncard.dev](digimoncard.dev) format.
+[digimoncard.dev](https://digimoncard.dev) format.
 
 ```
 // Digimon DeckList
@@ -103,7 +103,7 @@ The format for ``Tabletop Simulator``.
 
 ### `digimoncardapp`
 
-[digimoncard.app](digimoncard.app) format.
+[digimoncard.app](https://digimoncard.app) format.
 
 ```
 // Digimon DeckList
@@ -158,7 +158,7 @@ BT9-109 X Antibody 4
 
 ### `untap`
 
-Untap format.
+[Untap](https://untap.in) format.
 
 ```
 1 MetalTyrannomon                      (DCG) (BT11-055)

@@ -38,7 +38,7 @@ Options:
 
 ### `swudb_json`
 
-SWUDB JSON format.
+[SWUDB](https://swudb.com) JSON format.
 
 ```json
 {
@@ -159,7 +159,7 @@ SWUDB JSON format.
 
 ### `melee`
 
-Melee format.
+[Melee](https://melee.gg) format.
 
 ```
 Leaders

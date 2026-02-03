@@ -14,6 +14,7 @@ The following plugins are currently available:
 * [Altered]({{% ref "altered.md" %}})
 * [Ashes Reborn]({{% ref "ashes_reborn.md" %}})
 * [Digimon]({{% ref "digimon.md" %}})
+* [Echoes of Astra]({{% ref "echoes_of_astra.md" %}})
 * [Elestrals]({{% ref "elestrals.md" %}})
 * [Final Fantasy]({{% ref "final_fantasy.md" %}})
 * [Flesh and Blood]({{% ref "flesh_and_blood.md" %}})
@@ -25,4 +26,3 @@ The following plugins are currently available:
 * [Riftbound]({{% ref "riftbound.md" %}})
 * [Sorcery: Contested Realm]({{% ref "sorcery_contested_realm.md" %}})
 * [Star Wars Unlimited]({{% ref "star_wars_unlimited.md" %}})
-* [Echoes of Astra]({{% ref "echoes_of_astra.md" %}})

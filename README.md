@@ -139,6 +139,8 @@ The [Ashes Reborn plugin](plugins/ashes_reborn/README.md) supports **Ashes** and
 
 The [Digimon plugin](plugins/digimon/README.md) supports **Tabletop Simulator**, **Digimoncard.io**, **Digimoncard.dev**, **Digimoncard.app**, **DigimonMeta**, and **Untap** formats.
 
+The [Echoes of Astra plugin](plugins/echoes_of_astra/README.md) supports **AstraBuilder** format.
+
 The [Elestrals plugin](plugins/elestrals/README.md) supports **Elestrals** format.
 
 The [Final Fantasy plugin](plugins/final_fantasy/README.md) supports **Tabletop Simulator** and **Untap** formats.
@@ -160,8 +162,6 @@ The [Riftbound plugin](plugins/riftbound/README.md) supports **Tabletop Simulato
 The [Sorcery: Contested Realm plugin](plugins/sorcery_contested_realm/README.md) supports **Curiosa** format.
 
 The [Star Wars Unlimited plugin](plugins/star_wars_unlimited/README.md) supports **SWUDB JSON**, **Melee**, and **Picklist** formats.
-
-The [Echoes of Astra plugin](plugins/echoes_of_astra/README.md) supports **AstraBuilder** format.
 
 ### Double-Sided Cards
 

@@ -1,6 +1,6 @@
 ---
 title: 'Echoes of Astra'
-weight: 120
+weight: 33
 ---
 
 This plugin reads a decklist, fetches the card image from the [AstraBuilder](https://www.astra-builder.com/en), and puts the card images into the proper `game/` directories.

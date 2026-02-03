@@ -25,134 +25,13 @@ Now you can create the PDF using [`create_pdf.py`](../../README.md#create_pdfpy)
 ## CLI Options
 
 ```
-Usage: fetch.py [OPTIONS] DECK_PATH {json|melee|picklist}
+Usage: fetch.py [OPTIONS] DECK_PATH {melee|picklist|swudb_json}
 
 Options:
   --help  Show this message and exit.
 ```
 
 ## Formats
-
-### `swudb_json`
-
-[SWUDB](https://swudb.com) JSON format.
-
-```json
-{
-  "metadata": {
-    "name": "Wichita PQ - 4th",
-    "author": "aces"
-  },
-  "leader": {
-    "id": "SOR_017",
-    "count": 1
-  },
-  "base": {
-    "id": "TWI_029",
-    "count": 1
-  },
-  "deck": [
-    {
-      "id": "SOR_203",
-      "count": 3
-    },
-    {
-      "id": "SHD_202",
-      "count": 3
-    },
-    {
-      "id": "SOR_211",
-      "count": 2
-    },
-    {
-      "id": "SOR_200",
-      "count": 3
-    },
-    {
-      "id": "TWI_226",
-      "count": 3
-    },
-    {
-      "id": "SOR_201",
-      "count": 3
-    },
-    {
-      "id": "SHD_231",
-      "count": 3
-    },
-    {
-      "id": "TWI_198",
-      "count": 2
-    },
-    {
-      "id": "SHD_203",
-      "count": 2
-    },
-    {
-      "id": "SHD_174",
-      "count": 3
-    },
-    {
-      "id": "SHD_204",
-      "count": 2
-    },
-    {
-      "id": "SOR_202",
-      "count": 2
-    },
-    {
-      "id": "SHD_197",
-      "count": 3
-    },
-    {
-      "id": "SHD_213",
-      "count": 3
-    },
-    {
-      "id": "SOR_193",
-      "count": 3
-    },
-    {
-      "id": "SHD_200",
-      "count": 3
-    },
-    {
-      "id": "SHD_248",
-      "count": 3
-    },
-    {
-      "id": "TWI_196",
-      "count": 2
-    },
-    {
-      "id": "SOR_198",
-      "count": 2
-    }
-  ],
-  "sideboard": [
-    {
-      "id": "SOR_195",
-      "count": 2
-    },
-    {
-      "id": "SHD_055",
-      "count": 1
-    },
-    {
-      "id": "SHD_219",
-      "count": 2
-    },
-    {
-      "id": "SHD_207",
-      "count": 2
-    },
-    {
-      "id": "SOR_199",
-      "count": 3
-    }
-  ]
-}
-```
 
 ### `melee`
 
@@ -276,4 +155,125 @@ Picklist format.
 
 [ ] [ ] [ ]  Waylay
              SOR 222, SOR 484, SOROP 03, TWI 226
+```
+
+### `swudb_json`
+
+[SWUDB](https://swudb.com) JSON format.
+
+```json
+{
+  "metadata": {
+    "name": "Wichita PQ - 4th",
+    "author": "aces"
+  },
+  "leader": {
+    "id": "SOR_017",
+    "count": 1
+  },
+  "base": {
+    "id": "TWI_029",
+    "count": 1
+  },
+  "deck": [
+    {
+      "id": "SOR_203",
+      "count": 3
+    },
+    {
+      "id": "SHD_202",
+      "count": 3
+    },
+    {
+      "id": "SOR_211",
+      "count": 2
+    },
+    {
+      "id": "SOR_200",
+      "count": 3
+    },
+    {
+      "id": "TWI_226",
+      "count": 3
+    },
+    {
+      "id": "SOR_201",
+      "count": 3
+    },
+    {
+      "id": "SHD_231",
+      "count": 3
+    },
+    {
+      "id": "TWI_198",
+      "count": 2
+    },
+    {
+      "id": "SHD_203",
+      "count": 2
+    },
+    {
+      "id": "SHD_174",
+      "count": 3
+    },
+    {
+      "id": "SHD_204",
+      "count": 2
+    },
+    {
+      "id": "SOR_202",
+      "count": 2
+    },
+    {
+      "id": "SHD_197",
+      "count": 3
+    },
+    {
+      "id": "SHD_213",
+      "count": 3
+    },
+    {
+      "id": "SOR_193",
+      "count": 3
+    },
+    {
+      "id": "SHD_200",
+      "count": 3
+    },
+    {
+      "id": "SHD_248",
+      "count": 3
+    },
+    {
+      "id": "TWI_196",
+      "count": 2
+    },
+    {
+      "id": "SOR_198",
+      "count": 2
+    }
+  ],
+  "sideboard": [
+    {
+      "id": "SOR_195",
+      "count": 2
+    },
+    {
+      "id": "SHD_055",
+      "count": 1
+    },
+    {
+      "id": "SHD_219",
+      "count": 2
+    },
+    {
+      "id": "SHD_207",
+      "count": 2
+    },
+    {
+      "id": "SOR_199",
+      "count": 3
+    }
+  ]
+}
 ```

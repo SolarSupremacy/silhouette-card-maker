@@ -95,9 +95,9 @@ def parse_exburst(deck_text: str, handle_card: Callable) -> None:
 
 class DeckFormat(str, Enum):
     DECKPLANET = 'deckplanet'
-    LIMITLESSTCG = 'limitless'
     EGMANEVENTS = 'egman'
     EXBURST = 'exburst'
+    LIMITLESSTCG = 'limitless'
 
 def parse_deck(deck_text: str, format: DeckFormat, handle_card: Callable) -> None:
     if format == DeckFormat.DECKPLANET:

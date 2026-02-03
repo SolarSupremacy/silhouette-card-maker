@@ -102,9 +102,9 @@ def parse_picklist(deck_text: str, handle_card: Callable) -> None:
     parse_deck_helper(deck_text, handle_card, split_picklist_deck, is_picklist_line, extract_picklist_card_data)
 
 class DeckFormat(str, Enum):
-    SWUDB_JSON = 'swudb_json'
     MELEE = 'melee'
     PICKLIST = 'picklist'
+    SWUDB_JSON = 'swudb_json'
 
 def parse_deck(deck_text: str, format: DeckFormat, handle_card: Callable) -> None:
     if format == DeckFormat.SWUDB_JSON:

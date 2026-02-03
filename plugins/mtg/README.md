@@ -25,7 +25,7 @@ Now you can create the PDF using [`create_pdf.py`](../../README.md#create_pdfpy)
 ## CLI Options
 
 ```
-Usage: fetch.py [OPTIONS] DECK_PATH {simple|mtga|mtgo|archidekt|deckstats|moxfield|scryfall_json|mpcfill_xml}
+Usage: fetch.py [OPTIONS] DECK_PATH {archidekt|deckstats|moxfield|mpcfill_xml|mtga|mtgo|scryfall_json|simple}
 
 Options:
   -i, --ignore_set_and_collector_number
@@ -79,50 +79,6 @@ python plugins/mtg/fetch.py game/decklist/eldraine_commander.txt deckstats -s el
 
 ## Formats
 
-### `simple`
-
-A list of card names.
-
-```
-Isshin, Two Heavens as One
-Arid Mesa
-Battlefield Forge
-Blazemire Verge
-Blightstep Pathway
-```
-
-### `mtga`
-
-Magic: The Gathering Arena format.
-
-```
-About
-Name Death & Taxes
-
-Companion
-1 Yorion, Sky Nomad
-
-Deck
-2 Arid Mesa
-1 Lion Sash
-1 Loran of the Third Path
-2 Witch Enchanter
-```
-
-### `mtgo`
-
-Magic: The Gathering Online format.
-
-```
-1 Ainok Bond-Kin
-1 Angel of Condemnation
-2 Witch Enchanter
-
-SIDEBOARD:
-1 Containment Priest
-3 Deafening Silence
-```
-
 ### `archidekt`
 
 [Archidekt](https://archidekt.com) format.
@@ -164,45 +120,6 @@ SIDEBOARD:
 SIDEBOARD:
 1 Containment Priest (M21) 13
 1 Deafening Silence (MB2) 9
-```
-
-### `scryfall_json`
-
-[Scryfall](https://scryfall.com) JSON format.
-
-```json
-{
-  "entries": {
-    "mainboard": [
-      {
-        "object": "deck_entry",
-        "id": "ad26be56-051c-48f0-92ec-f99da16af903",
-        "deck_id": "3e3f8810-6143-4036-a5a7-9c9f07a5e2e3",
-        "section": "mainboard",
-        "cardinality": 485.5,
-        "count": 4,
-        "raw_text": "4 Lightning Bolt",
-        "found": true,
-        "printing_specified": false,
-        "finish": null,
-        "card_digest": {
-          "object": "card_digest",
-          "id": "77c6fa74-5543-42ac-9ead-0e890b188e99",
-          "oracle_id": "4457ed35-7c10-48c8-9776-456485fdf070",
-          "name": "Lightning Bolt",
-          "scryfall_uri": "https://scryfall.com/card/clu/141/lightning-bolt",
-          "mana_cost": "{R}",
-          "type_line": "Instant",
-          "collector_number": "141",
-          "set": "clu",
-          "image_uris": {
-            "front": "https://cards.scryfall.io/large/front/7/7/77c6fa74-5543-42ac-9ead-0e890b188e99.jpg?1706239968"
-          }
-        }
-      }
-    ]
-  }
-}
 ```
 
 ### `mpcfill_xml`
@@ -265,4 +182,87 @@ SIDEBOARD:
     </backs>
     <cardback>1LrVX0pUcye9n_0RtaDNVl2xPrQgn7CYf</cardback>
 </order>
+```
+
+### `mtga`
+
+Magic: The Gathering Arena format.
+
+```
+About
+Name Death & Taxes
+
+Companion
+1 Yorion, Sky Nomad
+
+Deck
+2 Arid Mesa
+1 Lion Sash
+1 Loran of the Third Path
+2 Witch Enchanter
+```
+
+### `mtgo`
+
+Magic: The Gathering Online format.
+
+```
+1 Ainok Bond-Kin
+1 Angel of Condemnation
+2 Witch Enchanter
+
+SIDEBOARD:
+1 Containment Priest
+3 Deafening Silence
+```
+
+### `scryfall_json`
+
+[Scryfall](https://scryfall.com) JSON format.
+
+```json
+{
+  "entries": {
+    "mainboard": [
+      {
+        "object": "deck_entry",
+        "id": "ad26be56-051c-48f0-92ec-f99da16af903",
+        "deck_id": "3e3f8810-6143-4036-a5a7-9c9f07a5e2e3",
+        "section": "mainboard",
+        "cardinality": 485.5,
+        "count": 4,
+        "raw_text": "4 Lightning Bolt",
+        "found": true,
+        "printing_specified": false,
+        "finish": null,
+        "card_digest": {
+          "object": "card_digest",
+          "id": "77c6fa74-5543-42ac-9ead-0e890b188e99",
+          "oracle_id": "4457ed35-7c10-48c8-9776-456485fdf070",
+          "name": "Lightning Bolt",
+          "scryfall_uri": "https://scryfall.com/card/clu/141/lightning-bolt",
+          "mana_cost": "{R}",
+          "type_line": "Instant",
+          "collector_number": "141",
+          "set": "clu",
+          "image_uris": {
+            "front": "https://cards.scryfall.io/large/front/7/7/77c6fa74-5543-42ac-9ead-0e890b188e99.jpg?1706239968"
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+### `simple`
+
+A list of card names.
+
+```
+Isshin, Two Heavens as One
+Arid Mesa
+Battlefield Forge
+Blazemire Verge
+Blightstep Pathway
 ```

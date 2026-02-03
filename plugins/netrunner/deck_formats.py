@@ -134,11 +134,11 @@ def parse_jinteki(deck_text: str, handle_card: Callable) -> None:
     parse_deck_helper(deck_text, is_jinteki_line, extract_jinteki_card_data, handle_card)
 
 class DeckFormat(str, Enum):
-    TEXT = 'text'
     BBCODE = 'bbcode'
+    JINTEKI = 'jinteki'
     MARKDOWN = 'markdown'
     PLAIN_TEXT = 'plain_text'
-    JINTEKI = 'jinteki'
+    TEXT = 'text'
 
 def parse_deck(deck_text: str, format: DeckFormat, handle_card: Callable) -> None:
     if format == DeckFormat.TEXT:

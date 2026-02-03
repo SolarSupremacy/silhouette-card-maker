@@ -64,8 +64,8 @@ def parse_egman(deck_text: str, handle_card: Callable) -> None:
     parse_deck_helper(deck_text, handle_card, is_egman_line, extract_egman_card_data)
 
 class DeckFormat(str, Enum):
-    OPTCGSIMULATOR = 'optcgsim'
     EGMANEVENTS = 'egman'
+    OPTCGSIMULATOR = 'optcgsim'
 
 def parse_deck(deck_text: str, format: DeckFormat, handle_card: Callable) -> None:
     if format == DeckFormat.OPTCGSIMULATOR:

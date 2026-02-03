@@ -138,12 +138,12 @@ def parse_untap(deck_text: str, handle_card: Callable):
     parse_deck_helper(deck_text, handle_card, split_untap_deck, is_untap_line, extract_untap_card_data)
 
 class DeckFormat(str, Enum):
-    TTS         = 'tts'
-    DIGIMONCARDIO = 'digimoncardio'
-    DIGIMONCARDDEV = 'digimoncarddev'
     DIGIMONCARDAPP = 'digimoncardapp'
+    DIGIMONCARDDEV = 'digimoncarddev'
+    DIGIMONCARDIO = 'digimoncardio'
     DIGIMONMETA = 'digimonmeta'
-    UNTAP       = 'untap'
+    TTS = 'tts'
+    UNTAP = 'untap'
 
 def parse_deck(deck_text: str, format: DeckFormat, handle_card: Callable):
     if format == DeckFormat.TTS:

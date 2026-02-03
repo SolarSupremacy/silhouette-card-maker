@@ -104,9 +104,9 @@ def parse_piltover_archive(deck_text: str, handle_card: Callable):
     parse_deck_helper(deck_text, split_piltover_archive_deck, is_piltover_archive_line, extract_piltover_archive_card_data, handle_card)
 
 class DeckFormat(str, Enum):
-    TTS       = 'tts'
+    PILTOVER = 'piltover_archive'
     PIXELBORN = 'pixelborn'
-    PILTOVER  = 'piltover_archive'
+    TTS = 'tts'
 
 def parse_deck(deck_text: str, format: DeckFormat, handle_card: Callable):
     if format == DeckFormat.TTS:

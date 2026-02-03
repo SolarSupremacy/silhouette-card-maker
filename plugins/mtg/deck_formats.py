@@ -257,14 +257,14 @@ def parse_mpcfill_xml(deck_text, handle_card: Callable) -> None:
         handle_card(index, item["id"], item["name"], item.get("back", None), item["quantity"])
 
 class DeckFormat(str, Enum):
-    SIMPLE = "simple"
-    MTGA = "mtga"
-    MTGO = "mtgo"
     ARCHIDEKT = "archidekt"
     DECKSTATS = "deckstats"
     MOXFIELD = "moxfield"
-    SCRYFALL_JSON = "scryfall_json"
     MPCFILL_XML = "mpcfill_xml"
+    MTGA = "mtga"
+    MTGO = "mtgo"
+    SCRYFALL_JSON = "scryfall_json"
+    SIMPLE = "simple"
 
 def parse_deck(deck_text: str, format: DeckFormat, handle_card: Callable) -> None:
     if format == DeckFormat.SIMPLE:
